@@ -21,7 +21,7 @@ public class Ship extends JComponent
         rectangleX=PositionX;
         rectangleY=PositionY;
     }
-    
+
     public void paintComponent(Graphics g)
     {
         System.out.print ("Executing painComponent method in Ship Class\n");

@@ -1,5 +1,6 @@
 import javax.swing.JFrame;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -16,6 +17,7 @@ public class Board extends JComponent
     private int rectangleY=0; 
     private int BoardHeight=10;
     private int BoardWidth=10;
+    private int MaxCells=BoardHeight*BoardWidth;
     private int BoardHeightPixels=100*5;
     private int BoardWidthPixels=100*5;
     private int BoxSizePixels=10*5;
@@ -25,46 +27,61 @@ public class Board extends JComponent
     private JFrame Frame = new JFrame();
     private String[][] BoardMAP = new String[BoardWidth][BoardHeight]; /*0,m,S,s */
     private String BoardType=""; //PLAYER or COMPUTER
-    public Board (String title, boolean visible)
+
+    public Board (String title)
     {
         Frame = new JFrame(title);             
         Frame.add(this);
         Frame.setSize(FrameWidth,FrameHeight);
-        Frame.setVisible(visible);
-        this.initBoardMap();
+        Frame.setVisible(true);
+        initBoardMap();
         addMouseListener(new MouseAdapter()
             {
                 public void mouseClicked(MouseEvent e)
                 {
                     rectangleX=e.getX();
                     rectangleY=e.getY();
-                    //if (editable)
                     if (BoardType.equals ("PLAYER"))
                     {                       
                         if(returnShipNum()<MaxShips)
                         {
-                            System.out.println("Executing mouseClicked method in Board class, X=" + rectangleX +" Y=" +rectangleY);
+                            //System.out.println("Executing mouseClicked method in Board class, X="+rectangleX+", Y="+rectangleY+" for "+getBoardType()+" object");
                             setrectangleXY (rectangleX, rectangleY, false);
-                            System.out.println("Current number of ships: " + returnShipNum() + "  Max is: " + MaxShips);
+                            //System.out.println("Number of ships: " + returnShipNum() + "  Max is: " + MaxShips);
+                            if (returnShipNum()< 1)
+                            {
+                                //System.out.println("Executing printBoardMap method in Board class , COMPUTER WINS, GAME OVER");
+                                String temp="GAME OVER, COMPUTER WINS ";
+                                JOptionPane.showMessageDialog(Frame, temp);
+                            }
                             Frame.repaint();                            
                         }
                     }
                     else if (BoardType.equals ("COMPUTER"))
-                    //else if (!editable)
-                    {                        
-                        System.out.println("Executing mouseClicked method to FIRE in Board class, X=" + rectangleX +" Y=" +rectangleY);
+                    {                
+                        //System.out.println("Executing mouseClicked method to FIRE in Board class, X="+rectangleX+", Y="+rectangleY+" for "+getBoardType()+" object");
                         setrectangleXY (rectangleX, rectangleY, true);
+
+                        if (returnShipNum()<1)
+                        {
+                            //System.out.println("Executing printBoardMap method in Board class , PLAYER WINS, GAME OVER");
+                            String temp="GAME OVER, PLAYER WINS";
+                            JOptionPane.showMessageDialog(Frame, temp);
+                        }
                         //shootPlayer();
                         Frame.repaint();
-                    }
-                }   
 
+                    }   
+                }
             });
+            
     }
 
+    
     public void setBoardType(String boardtype)
     {
         BoardType=boardtype;
+
     }
 
     public String getBoardType()
@@ -178,16 +195,19 @@ public class Board extends JComponent
             i=9;
         }
         if (fire){
-            if (BoardMAP[i][j]=="S") /*hit*/
+            if (BoardMAP[i][j]=="S")
+            { /*hit*/
+                System.out.println ("Sorry " + getBoardType()+", You've been hit!!, at posX="+i+", posY="+j);
                 BoardMAP[i][j]="s";
-            else                     /*miss*/
+            }
+            else if (BoardMAP[i][j] != "s")                    /*miss*/
                 BoardMAP[i][j]="m";
         }
         else
         {
             BoardMAP[i][j]="S";
         }
-        this.printBoardMap();
+        //printBoardMap();
     }
 
     public int returnShipNum()
@@ -206,23 +226,39 @@ public class Board extends JComponent
         return shipNum;
     }
 
+    public int returnSunkedShipNum()
+    {
+        int shipNum = 0;
+        for(int i=0; i<BoardWidth; i++)
+        {
+            for(int j=0; j<BoardHeight; j++)
+            {
+                if(BoardMAP[i][j].equals("s"))
+                {
+                    shipNum++;
+                }
+            }
+        }
+        return shipNum;
+    }
+
     private void initBoardMap()
     {
-        System.out.print ("Executing initBoardMap for " + getBoardType() + "method in Board class\n");
+        //System.out.println ("Executing initBoardMap method in Board class for " + getBoardType() + " object");
         for(int i=0; i<BoardWidth; i++)
         {
             for(int j=0; j<BoardHeight; j++)
             {
                 BoardMAP[i][j]="0";
-                System.out.print(BoardMAP[i][j] + "  ");
+                //System.out.print(BoardMAP[i][j] + "  ");
             }
-            System.out.println();
+            //System.out.println();
         }
     }
 
     public void printBoardMap()
     {
-        System.out.print("Executing printBoardMap for " + getBoardType() + " method in Board class\n");
+        //System.out.println("Executing printBoardMap method in Board class for "+getBoardType()+" object, ALIVE:"+ returnShipNum()+", SUNK: " + returnSunkedShipNum());
         for(int i=0; i<BoardWidth; i++)
         {
             for(int j=0; j<BoardHeight; j++)
@@ -231,6 +267,7 @@ public class Board extends JComponent
             }
             System.out.println();
         }
+
     }
 
     public void paintComponent(Graphics g)
@@ -335,7 +372,7 @@ public class Board extends JComponent
                     i=9;
                 }
 
-                /*Ship is alive*/
+                /*Alive*/
                 if (BoardMAP[i][j] == "S")
                 {
                     if (BoardType.equals ("PLAYER"))
@@ -347,7 +384,7 @@ public class Board extends JComponent
                     }
                 }
 
-                /*Ship is hit*/
+                /*Successfull hit*/
                 else if (BoardMAP[i][j] == "s")
                 {
                     g.setColor(Color.BLACK);
@@ -371,7 +408,7 @@ public class Board extends JComponent
                 }
             }
         }
-        System.out.print("Executing paintComponent method in Board Class\n");
+        //System.out.println("Executing paintComponent method in Board Class\n");
     }
 
     public void setComputerShips()
@@ -379,19 +416,33 @@ public class Board extends JComponent
         //figure out how t get random ships all over the board
         int random = 0;
         int shipNum = 0;
-        for(int i=0; i<BoardWidth; i++)
+        int cellnum=0;
+        Coordinate[] Cells = new Coordinate [MaxCells];
+        for(int x=0; x<BoardWidth; x++)
         {
-            for(int j=0; j<BoardHeight; j++)
+            for(int y=0; y<BoardHeight; y++)
             {
-                if(BoardMAP[i][j].equals("0")&&shipNum<15)
+                if (cellnum<MaxCells)
                 {
-                    random = (int)(Math.random() * 2);
-                    if(random==1)
-                    {
-                        BoardMAP[i][j]="S";
-                        shipNum++;
-                    }               
+                    //System.out.println("Cellnum: " + cellnum + ", x=" + x + ",y=" + y); 
+                    Cells[cellnum] = new Coordinate (x, y);
+                    cellnum++;
                 }
+            }
+        }
+
+        while(shipNum<MaxShips)
+        {
+            random = (int)(Math.random() * MaxCells);
+            //System.out.println("Executing setComputerShips method in Board Class, random cell is: "+random+" out of "+MaxCells);
+            if(BoardMAP[Cells[random].getX()][Cells[random].getY()].equals("0"))
+            {
+                BoardMAP[Cells[random].getX()][Cells[random].getY()]="S";
+                shipNum++;            
+            }
+            else
+            {
+                //System.out.println("Executing setComputerShips method in Board Class, handling collision, there is already a ship at position: "+ random);
             }
         }
     }

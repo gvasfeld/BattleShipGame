@@ -13,17 +13,46 @@ public class Game extends JComponent
 {
     public static void main(String [] args)
     {
-        //Players fire depends on computers fire and vice versa
-        System.out.print ("\nBeginExecuting main method in Game Class\n");
-        Board ComputerBoard = new Board("COMPUTER SHIPS", true);
+        System.out.println("Beginning game: Water World");
+        System.out.println();
+        System.out.println("The board you will be shooting at is under PLAYER SHIPS board.");
+        System.out.println();
+        System.out.println("Move over PLAYER SHIPS Board in order to see both of the boards.");
+        
+        Board ComputerBoard = new Board("COMPUTER SHIPS");
         ComputerBoard.setBoardType("COMPUTER");
-        Board PlayerBoard = new Board ("PLAYER SHIPS", true);
+        Board PlayerBoard = new Board ("PLAYER SHIPS");
         PlayerBoard.setBoardType("PLAYER");
-        ComputerBoard.printBoardMap();        
-        PlayerBoard.printBoardMap();
         ComputerBoard.setComputerShips();
-        ComputerBoard.printBoardMap();   
+        System.out.println();        
+        System.out.println("INSTRUCTIONS");
+        System.out.println();
+        System.out.println("COMPUTER SHIPS board has been set.");
+        System.out.println();
+        System.out.println("1. Begin setting PLAYER SHIPS by clicking squares.");
+        System.out.println("You need to select 15 squares before you may begin firing.");
+        System.out.println("Once fifteen ships are selected, you may no longer click on your own board.");
+        System.out.println();
+        System.out.println("2. Click on COMPUTER SHIPS board to start firing. ");
+        System.out.println();
+        System.out.println("Goal to win: Sink all computer ships before computer sinks yours!");
+        
+        System.out.println();
+        System.out.println("COLOR KEY");
+        System.out.println();
+        System.out.println("BLUE:   WATER");
+        System.out.println("BLACK:  SHIP");
+        System.out.println("RED:    MISFIRE");
+        System.out.println("YELLOW: HIT");
+        
+        //Players fire depends on computers fire and vice versa
+        //System.out.print ("\nBeginExecuting main method in Game Class\n");
+        
+        // ComputerBoard.printBoardMap();        
+        //PlayerBoard.printBoardMap();
+        
+        //ComputerBoard.printBoardMap();   
 
-        System.out.print("\nEnd Executing main method in Game Class\n");
+        //System.out.print("\nEnd Executing main method in Game Class\n");
     }
 }
