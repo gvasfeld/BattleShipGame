@@ -27,7 +27,6 @@ public class Board extends JComponent
     private JFrame Frame = new JFrame();
     private String[][] BoardMAP = new String[BoardWidth][BoardHeight]; /*0,m,S,s */
     private String BoardType=""; //PLAYER or COMPUTER
-    private boolean Turn=true;
 
     public Board (String title)
     {
@@ -44,13 +43,10 @@ public class Board extends JComponent
                     rectangleY=e.getY();
                     if (BoardType.equals ("PLAYER"))
                     {      
-                        System.out.println("Executing mouseClicked method in Board class, X="+rectangleX+", Y="+rectangleY+" for "+getBoardType()+" object, Turn: " + getTurn());
-                        if (returnTotalShipNum()==MaxShips && getTurn())
+                        //System.out.println("Executing mouseClicked method in Board class, X="+rectangleX+", Y="+rectangleY+" for "+getBoardType()+" object");
+                        if (returnTotalShipNum()==MaxShips)
                         {
-
                             firePlayerShips();
-                            //toggleTurn();
-                            // setrectangleXY (rectangleX, rectangleY, true);
                             if (returnAliveShipNum()< 1)
                             {
                                 //System.out.println("Executing printBoardMap method in Board class , COMPUTER WINS, GAME OVER");
@@ -61,7 +57,7 @@ public class Board extends JComponent
                         else if(returnAliveShipNum()<MaxShips )
                         {     
                             setrectangleXY (rectangleX, rectangleY, false);                            
-                            System.out.println("Player's number of ships: " + returnAliveShipNum() + "  Max is: " + MaxShips);
+                            //System.out.println("Player's number of ships: " + returnAliveShipNum() + ",  Max is: " + MaxShips);
                             if (returnAliveShipNum()< 1)
                             {
                                 //System.out.println("Executing printBoardMap method in Board class , COMPUTER WINS, GAME OVER");
@@ -70,7 +66,7 @@ public class Board extends JComponent
                             }                     
                         }
 
-                        System.out.println("Executing mouseClicked method in Board class,adjusted X="+rectangleX+", Y="+rectangleY+" for "+getBoardType()+" object");
+                        //System.out.println("Executing mouseClicked method in Board class,adjusted X="+rectangleX+", Y="+rectangleY+" for "+getBoardType()+" object");
                         Frame.repaint();   
                     }
                     else if (BoardType.equals ("COMPUTER"))
@@ -287,7 +283,8 @@ public class Board extends JComponent
 
     public void printBoardMap()
     {
-        System.out.println("Executing printBoardMap method in Board class for "+getBoardType()+" object, ALIVE:"+ returnAliveShipNum()+", SUNK: " + returnSunkedShipNum()+", Total: "+ returnTotalShipNum());
+        System.out.println("Executing printBoardMap method in Board class for "+getBoardType()+" object");
+        System.out.println("ALIVE:"+ returnAliveShipNum()+", SUNK: " + returnSunkedShipNum()+", TOTAL: "+ returnTotalShipNum()+", MAX alowed: " + MaxShips);
         for(int i=0; i<BoardWidth; i++)
         {
             for(int j=0; j<BoardHeight; j++)
@@ -306,18 +303,7 @@ public class Board extends JComponent
         }
     }
 
-    public void toggleTurn()
-    {
-        if(Turn)
-            Turn=false;
-        else
-            Turn=true;
-    }
 
-    public boolean getTurn()
-    {
-        return Turn;
-    }
     public void paintComponent(Graphics g)
     {
         g.setColor(Color.BLUE);
@@ -515,26 +501,26 @@ public class Board extends JComponent
             }
         }
         random = (int)(Math.random() * MaxCells);
-        System.out.println("Executing firePlayerShipsmethod in Board Class, cell is: "+random);
+        //System.out.println("Executing firePlayerShipsmethod in Board Class, cell is: "+random);
         if(BoardMAP[Cells[random].getX()][Cells[random].getY()].equals("S"))
         {
             BoardMAP[Cells[random].getX()][Cells[random].getY()]="s";
-            System.out.println("Executing firePlayerShipsmethod in Board Class, Nice hit, cell is: "+random+ ", X="+Cells[random].getX()+", Y="+Cells[random].getY());           
+            System.out.println("Executing firePlayerShipsmethod in Board Class, successfull hit, cell is: "+random+ ", posX="+Cells[random].getY()+", posY="+Cells[random].getX());           
         }
         else if(BoardMAP[Cells[random].getX()][Cells[random].getY()].equals("s"))
         {
-            System.out.println("Executing firePlayerShipsmethod in Board Class, already shot here and sunk, retrying using recursion");
+            System.out.println("Executing firePlayerShipsmethod in Board Class, already shot here and sunk, retrying using recursion, cell is: "+random+ ", posX="+Cells[random].getY()+", posY="+Cells[random].getX());
             firePlayerShips();
         }
         else if(BoardMAP[Cells[random].getX()][Cells[random].getY()].equals("m"))
         {
-            System.out.println("Executing firePlayerShipsmethod in Board Class, already shoot here and missed, retrying using recursion");
+            System.out.println("Executing firePlayerShipsmethod in Board Class, already shoot here and missed, retrying using recursion, cell is: "+random+ ", posX="+Cells[random].getY()+", posY="+Cells[random].getX());
             firePlayerShips();
         }
         else if(BoardMAP[Cells[random].getX()][Cells[random].getY()].equals("0"))
         {
             BoardMAP[Cells[random].getX()][Cells[random].getY()]="m";
-            System.out.println("Executing firePlayerShipsmethod in Board Class,"+getBoardType()+" missed, cell is: "+random+ ", X="+Cells[random].getX()+", Y="+Cells[random].getY());    
+            System.out.println("Executing firePlayerShipsmethod in Board Class, missed, cell is: "+random+ ", posX="+Cells[random].getY()+", posY="+Cells[random].getX());    
         }
         //rectangleX=Cells[random].getX();
         //rectangleY=Cells[random].getY();        

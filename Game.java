@@ -44,6 +44,9 @@ public class Game extends JComponent
         System.out.println("BLACK:  SHIP");
         System.out.println("RED:    MISFIRE");
         System.out.println("YELLOW: HIT");
+        System.out.println();
+        System.out.println("****READY TO PLAY****");
+        System.out.println();
         
         //Players fire depends on computers fire and vice versa
         //System.out.print ("\nBeginExecuting main method in Game Class\n");
