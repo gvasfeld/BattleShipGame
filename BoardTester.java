@@ -9,16 +9,13 @@ public class BoardTester
 {
     public static void main (String [] args)
     {
-        Board ComputerBoard = new Board("COMPUTER SHIPS");
+        Board ComputerBoard = new Board("COMPUTER SHIPS",true);
         ComputerBoard.setBoardType("COMPUTER");
-        System.out.println(ComputerBoard.getBoardType());
-        Board PlayerBoard = new Board ("PLAYER SHIPS");
+        Board PlayerBoard = new Board ("PLAYER SHIPS",true);
         PlayerBoard.setBoardType("PLAYER");
-        System.out.println(PlayerBoard.getBoardType());
         PlayerBoard.printBoardMap();
         ComputerBoard.setComputerShips();
-        ComputerBoard.printBoardMap();   
-
+        ComputerBoard.printBoardMap();
         System.out.print("\nEnd Executing main method in Game Class\n");
     }
 }

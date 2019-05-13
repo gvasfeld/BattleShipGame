@@ -18,10 +18,9 @@ public class Game extends JComponent
         System.out.println("The board you will be shooting at is under PLAYER SHIPS board.");
         System.out.println();
         System.out.println("Move over PLAYER SHIPS Board in order to see both of the boards.");
-        
-        Board ComputerBoard = new Board("COMPUTER SHIPS");
+        Board ComputerBoard = new Board("COMPUTER SHIPS",false);
         ComputerBoard.setBoardType("COMPUTER");
-        Board PlayerBoard = new Board ("PLAYER SHIPS");
+        Board PlayerBoard = new Board ("PLAYER SHIPS",false);
         PlayerBoard.setBoardType("PLAYER");
         ComputerBoard.setComputerShips();
         System.out.println();        
@@ -47,15 +46,5 @@ public class Game extends JComponent
         System.out.println();
         System.out.println("****READY TO PLAY****");
         System.out.println();
-        
-        //Players fire depends on computers fire and vice versa
-        //System.out.print ("\nBeginExecuting main method in Game Class\n");
-        
-        // ComputerBoard.printBoardMap();        
-        //PlayerBoard.printBoardMap();
-        
-        //ComputerBoard.printBoardMap();   
-
-        //System.out.print("\nEnd Executing main method in Game Class\n");
     }
 }
