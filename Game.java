@@ -26,7 +26,7 @@ public class Game extends JComponent
         System.out.println();        
         System.out.println("INSTRUCTIONS");
         System.out.println();
-        System.out.println("COMPUTER SHIPS board has been set and is invisiable");
+        System.out.println("COMPUTER SHIPS board has been set and ships are invisible");
         System.out.println();
         System.out.println("1. Begin setting player ships by clicking squares on PLAYER SHIPS board.");
         System.out.println("You need to select 15 squares before you may begin firing.");
@@ -35,6 +35,8 @@ public class Game extends JComponent
         System.out.println("2. Click on COMPUTER SHIPS board to start firing. ");
         System.out.println();
         System.out.println("Goal to win: Sink 15 computer ships before computer sinks all of yours!");
+        System.out.println();
+        System.out.println("NOTE: The game will allow you to shoot more than once in a row. DON'T CHEAT!");
         
         System.out.println();
         System.out.println("COLOR KEY");

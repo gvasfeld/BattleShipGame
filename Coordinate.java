@@ -7,7 +7,6 @@
  */
 public class Coordinate
 {
-    // instance variables - replace the example below with your own
     private int x;
     private int y;
 
@@ -16,14 +15,12 @@ public class Coordinate
      */
     public Coordinate()
     {
-        // init instance variables
         x = 0;
         y = 0;
     }
 
     public Coordinate(int X, int Y)
     {
-        // initialise instance variables
         x = X;
         y = Y;
     }
@@ -35,12 +32,10 @@ public class Coordinate
      */
     public int getX()
     {
-        // put your code here
         return x;
     }
     public int getY()
     {
-        // put your code here
         return y;
     }
     public void setXY(int X, int Y)
@@ -48,8 +43,4 @@ public class Coordinate
         x = X;
         y = Y;
     }    
-    public void printX()
-    {
-         System.out.println("Executing printX method in Coordinate Class: " + x);
-    }
 }
