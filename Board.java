@@ -231,6 +231,7 @@ public class Board extends JComponent
             else if (BoardMAP[i][j] != "s")       /*miss*/
             {
                 BoardMAP[i][j]="m";
+                System.out.println (getBoardType()+", good for you, it's a miss, at posX="+j+", posY="+i);
             }
         }
         else
