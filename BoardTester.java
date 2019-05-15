@@ -16,6 +16,5 @@ public class BoardTester
         PlayerBoard.printBoardMap();
         ComputerBoard.setComputerShips();
         ComputerBoard.printBoardMap();
-        System.out.print("\nEnd Executing main method in Game Class\n");
     }
 }

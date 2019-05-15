@@ -28,6 +28,7 @@ public class Board extends JComponent
     private String[][] BoardMAP = new String[BoardWidth][BoardHeight]; /*0,m,S,s */
     private String BoardType=""; //PLAYER or COMPUTER
     boolean Debug=false;
+    Coordinate[] Cells = new Coordinate [MaxCells];
 
     public Board (String title, boolean debug)
     {
@@ -36,6 +37,7 @@ public class Board extends JComponent
         Frame.setSize(FrameWidth,FrameHeight);
         Frame.setVisible(true);
         initBoardMap();
+        initCells();
         Debug=debug;
         addMouseListener(new MouseAdapter()
             {
@@ -67,7 +69,7 @@ public class Board extends JComponent
                             setrectangleXY (rectangleX, rectangleY, false);                            
                             if(Debug) 
                             {
-                                System.out.println("Player's number of ships: " + returnAliveShipNum() + ",  Max is: " + MaxShips);
+                                System.out.println("Player's number of ships: " + returnAliveShipNum() + ",  Max allowed: " + MaxShips);
                             }
                             if (returnAliveShipNum()< 1)
                             {
@@ -78,11 +80,6 @@ public class Board extends JComponent
                                 String temp="GAME OVER, COMPUTER WINS ";
                                 JOptionPane.showMessageDialog(Frame, temp);
                             }                     
-                        }
-
-                        if(Debug)
-                        {
-                            System.out.println("Executing mouseClicked method in Board class,adjusted X="+rectangleX+", Y="+rectangleY+" for "+getBoardType()+" object");
                         }
                         Frame.repaint();   
                     }
@@ -239,6 +236,7 @@ public class Board extends JComponent
         else
         {
             BoardMAP[i][j]="S";
+            System.out.println ("Executing mouseClicked method to ADD ship in Board class, for " + getBoardType()+" object at posX="+j+", posY="+i);
         }
     }
 
@@ -352,7 +350,7 @@ public class Board extends JComponent
         {
             System.out.println("*****Click to ADD ships***************");
             System.out.println();
-            
+
         }
     }
 
@@ -417,19 +415,7 @@ public class Board extends JComponent
     {
         int random = 0;
         int shipNum = 0;
-        int cellnum=0;
-        Coordinate[] Cells = new Coordinate [MaxCells];
-        for(int x=0; x<BoardWidth; x++)
-        {
-            for(int y=0; y<BoardHeight; y++)
-            {
-                if (cellnum<MaxCells)
-                {
-                    Cells[cellnum] = new Coordinate (x, y);
-                    cellnum++;
-                }
-            }
-        }
+
         while(shipNum<MaxShips)
         {
             random = (int)(Math.random() * MaxCells);
@@ -452,12 +438,9 @@ public class Board extends JComponent
         }
     }
 
-    public void firePlayerShips()
+    public void initCells()
     {
-        int random = 0;
-        int shipNum = 0;
         int cellnum=0;
-        Coordinate[] Cells = new Coordinate [MaxCells];
         for(int x=0; x<BoardWidth; x++)
         {
             for(int y=0; y<BoardHeight; y++)
@@ -469,6 +452,12 @@ public class Board extends JComponent
                 }
             }
         }
+    }
+
+    public void firePlayerShips()
+    {
+        int random = 0;
+        int shipNum = 0;
         random = (int)(Math.random() * MaxCells);
         if(Debug)
         {
